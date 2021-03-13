@@ -7,8 +7,8 @@ public class TestCaseTest extends TestCase{
 
     public void testRunning() {
         WasRun wasRun = new WasRun("testMethod");
-        System.out.println(wasRun.wasRun);  //false
+        Assert.assertEquals(false, wasRun.wasRun); //기대값, 실제값
         wasRun.run();
-        System.out.println(wasRun.wasRun);  //true
+        Assert.assertEquals(true, wasRun.wasRun); //기대값, 실제값
     }
 }
