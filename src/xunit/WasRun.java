@@ -12,13 +12,17 @@ public class WasRun extends TestCase {
          log = "setUp";
     }
 
+    @Override
+    public void tearDown() {
+        log += " tearDown";
+    }
+
     public void testMethod() {
         log += " testMethod";
     }
 
-    @Override
-    public void tearDown() {
-        log += " tearDown";
+    public void testBrokenMethod() {
+        throw new AssertionError();
     }
 
 }
