@@ -1,12 +1,30 @@
 package xunit;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class TestSuite {
-    List<WasRun> tests = new ArrayList<>();
+public class TestSuite implements Test {
+    List<Test> tests = new ArrayList<>();
 
-    public void add(WasRun test) {
+    public TestSuite() {}
+
+    public TestSuite(Class<? extends TestCase> testClass) {
+        Arrays.stream(testClass.getMethods())
+                .filter(m -> m.getAnnotation(xunit.annotation.Test.class) != null)
+                .forEach(m -> {
+                            try {
+                                add(testClass.getConstructor(String.class).newInstance(m.getName()));
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                );
+
+    }
+
+    public void add(Test test) {
         tests.add(test);
     }
 
